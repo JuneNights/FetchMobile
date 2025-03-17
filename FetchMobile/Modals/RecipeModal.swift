@@ -28,4 +28,15 @@ struct Recipe: Identifiable, Codable {
         case uuid
         case youtubeURL = "youtube_url"
     }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.cuisine = try container.decodeIfPresent(String.self, forKey: .cuisine) ?? "Unknown Cuisine"
+        self.name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Unnamed Recipe"
+        self.photoURLLarge = try container.decodeIfPresent(String.self, forKey: .photoURLLarge) ?? ""
+        self.photoURLSmall = try container.decodeIfPresent(String.self, forKey: .photoURLSmall) ?? ""
+        self.sourceURL = try container.decodeIfPresent(String.self, forKey: .sourceURL)
+        self.youtubeURL = try container.decodeIfPresent(String.self, forKey: .youtubeURL)
+        self.uuid = try container.decodeIfPresent(String.self, forKey: .uuid) ?? "Unknown UUID"
+    }
 }

@@ -122,9 +122,9 @@
 			children = (
 				BDF9A7682D88B337002DC6DD /* FetchMobileApp.swift */,
 				BDF9A7852D88CDB1002DC6DD /* Views */,
-				BDF9A7802D88CBFD002DC6DD /* Utilities */,
 				BDF9A77D2D88C310002DC6DD /* ViewModels */,
 				BDF9A77A2D88C0EE002DC6DD /* Modals */,
+				BDF9A7802D88CBFD002DC6DD /* Utilities */,
 				BDF9A7652D88B337002DC6DD /* Preview Content */,
 				BDF9A7662D88B337002DC6DD /* Assets.xcassets */,
 			);

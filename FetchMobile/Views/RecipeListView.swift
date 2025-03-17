@@ -59,39 +59,52 @@ struct RecipeListView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
             
-            
-            ScrollViewReader { proxy in
-                ScrollView(.vertical) {
-                    Color.clear.frame(height: 1).id("top")
-                    ForEach(filteredRecipes.sorted(by: getSortComparator(for: selectedSort))) { recipe in
-                        HStack {
-                            Button(action: { selectedRecipe = recipe }) {
-                                RecipeRowView(recipe: recipe)
+            if let errorMessage = recipeVM.errorMessage {
+                Text(errorMessage)
+                    .foregroundStyle(.red.opacity(0.75))
+                    .font(.largeTitle)
+                Spacer()
+            } else if recipeVM.recipes.isEmpty {
+                Text("Recipe list is empty..")
+                    .foregroundStyle(.orange.opacity(0.75))
+                    .font(.largeTitle)
+                Spacer()
+            } else {
+                ScrollViewReader { proxy in
+                    ScrollView(.vertical) {
+                        Color.clear.frame(height: 1).id("top")
+                        ForEach(filteredRecipes.sorted(by: getSortComparator(for: selectedSort))) { recipe in
+                            HStack {
+                                Button(action: { selectedRecipe = recipe }) {
+                                    RecipeRowView(recipe: recipe)
+                                }
+                                Spacer()
                             }
-                            Spacer()
-                        }
-                        .sheet(item: $selectedRecipe) { recipe in
-                            RecipeDetailView(recipe: recipe)
+                            .sheet(item: $selectedRecipe) { recipe in
+                                RecipeDetailView(recipe: recipe)
+                            }
                         }
                     }
-                }
-                .padding(.horizontal)
-                
-                Button(action: {
-                    withAnimation {
-                        proxy.scrollTo("top", anchor: .top)
+                    .padding(.horizontal)
+                    
+                    if !filteredRecipes.isEmpty {
+                        Button(action: {
+                            withAnimation {
+                                proxy.scrollTo("top", anchor: .top)
+                            }
+                        }) {
+                            Image(systemName: "arrow.up.circle.fill")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(.blue)
+                                .padding()
+                                .background(Color.white.opacity(0.8))
+                                .clipShape(Circle())
+                                .shadow(radius: 4)
+                        }
+                        .padding(.bottom, 10)
                     }
-                }) {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.blue)
-                        .padding()
-                        .background(Color.white.opacity(0.8))
-                        .clipShape(Circle())
-                        .shadow(radius: 4)
                 }
-                .padding(.bottom, 10)
             }
         }
     }
