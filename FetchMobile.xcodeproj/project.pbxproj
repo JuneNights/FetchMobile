@@ -24,6 +24,7 @@
 		BDF9A78B2D88D158002DC6DD /* RecipeSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF9A78A2D88D14D002DC6DD /* RecipeSorting.swift */; };
 		BDF9A78D2D88D33C002DC6DD /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF9A78C2D88D338002DC6DD /* String+Extension.swift */; };
 		BDF9A78F2D88E0ED002DC6DD /* RecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF9A78E2D88E0ED002DC6DD /* RecipeTests.swift */; };
+		BDF9A7932D88F541002DC6DD /* UserDefaultsSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF9A7922D88F539002DC6DD /* UserDefaultsSingleton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		BDF9A78A2D88D14D002DC6DD /* RecipeSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSorting.swift; sourceTree = "<group>"; };
 		BDF9A78C2D88D338002DC6DD /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		BDF9A78E2D88E0ED002DC6DD /* RecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTests.swift; sourceTree = "<group>"; };
+		BDF9A7922D88F539002DC6DD /* UserDefaultsSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsSingleton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 		BDF9A7802D88CBFD002DC6DD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				BDF9A7922D88F539002DC6DD /* UserDefaultsSingleton.swift */,
 				BDF9A78C2D88D338002DC6DD /* String+Extension.swift */,
 				BDF9A78A2D88D14D002DC6DD /* RecipeSorting.swift */,
 				BDF9A7782D88B7AC002DC6DD /* ProgressAnimation.swift */,
@@ -330,6 +333,7 @@
 				BDF9A78D2D88D33C002DC6DD /* String+Extension.swift in Sources */,
 				BDF9A7892D88CDF0002DC6DD /* RecipeDetailView.swift in Sources */,
 				BDF9A7872D88CDDC002DC6DD /* RecipeRowView.swift in Sources */,
+				BDF9A7932D88F541002DC6DD /* UserDefaultsSingleton.swift in Sources */,
 				BDF9A76D2D88B337002DC6DD /* FetchMobileApp.swift in Sources */,
 				BDF9A78B2D88D158002DC6DD /* RecipeSorting.swift in Sources */,
 				BDF9A77C2D88C10E002DC6DD /* RecipeModal.swift in Sources */,
