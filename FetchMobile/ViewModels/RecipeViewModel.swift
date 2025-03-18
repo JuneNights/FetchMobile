@@ -11,28 +11,40 @@ import Foundation
 @MainActor
 class RecipeViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
-    @Published var errorMessage: String? // Store error messages
+    @Published var errorMessage: String?
+    
+    private var urlString: String // Store the selected URL
+    
+    init(urlString: String) {
+        self.urlString = urlString
+    }
+    
+    func clearData() async {
+        recipes.removeAll()
+        errorMessage = nil
+    }
 
-    let url = URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json")!
+    func updateURL(newURL: String) {
+        self.urlString = newURL
+    }
 
     func fetchRecipes() async {
+        guard let url = URL(string: urlString) else {
+            errorMessage = "Invalid URL."
+            return
+        }
+
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let decodedData = try JSONDecoder().decode(RecipeList.self, from: data)
-            
+            let decodedData = try JSONDecoder().decode(RecipeResponse.self, from: data)
+
             if decodedData.recipes.isEmpty {
-                self.errorMessage = "No recipes found. Please check back later!"
+                errorMessage = "No recipes found. Please check back later!"
             } else {
-                self.recipes = decodedData.recipes
-                self.errorMessage = nil
+                recipes = decodedData.recipes
             }
         } catch {
-            self.errorMessage = "Failed to load recipes. Please try again later."
+            errorMessage = "Failed to load recipes due to malformed data."
         }
     }
-}
-
-
-struct RecipeList: Decodable {
-    let recipes: [Recipe]
 }

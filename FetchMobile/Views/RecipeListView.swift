@@ -12,23 +12,22 @@ struct RecipeListView: View {
     @State private var selectedRecipe: Recipe?
     @Binding var selectedSort: RecipeSorting
     @State private var searchText: String = ""
-    
+
     var filteredRecipes: [Recipe] {
-            if searchText.isEmpty {
-                return recipeVM.recipes
-            } else {
-                return recipeVM.recipes.filter { recipe in
-                    recipe.name.localizedCaseInsensitiveContains(searchText) ||
-                    recipe.cuisine.localizedCaseInsensitiveContains(searchText)
-                }
+        if searchText.isEmpty {
+            return recipeVM.recipes
+        } else {
+            return recipeVM.recipes.filter { recipe in
+                recipe.name.localizedCaseInsensitiveContains(searchText) ||
+                recipe.cuisine.localizedCaseInsensitiveContains(searchText)
             }
         }
-    
+    }
+
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                
                 Menu {
                     ForEach(RecipeSorting.allCases, id: \.self) { option in
                         Button(action: {
@@ -54,11 +53,11 @@ struct RecipeListView: View {
                 }
             }
             .padding(.horizontal)
-            
+
             TextField("Search recipes...", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
-            
+
             if let errorMessage = recipeVM.errorMessage {
                 Text(errorMessage)
                     .foregroundStyle(.red.opacity(0.75))
@@ -66,26 +65,27 @@ struct RecipeListView: View {
                 Spacer()
             } else if recipeVM.recipes.isEmpty {
                 Text("Recipe list is empty..")
-                    .foregroundStyle(.orange.opacity(0.75))
+                    .foregroundStyle(.red.opacity(0.75))
                     .font(.largeTitle)
                 Spacer()
             } else {
                 ScrollViewReader { proxy in
-                    ScrollView(.vertical) {
-                        Color.clear.frame(height: 1).id("top")
+                    List {
+                        Color.clear.frame(height: 1).id("top") // Used for scrolling to top
                         ForEach(filteredRecipes.sorted(by: getSortComparator(for: selectedSort))) { recipe in
-                            HStack {
-                                Button(action: { selectedRecipe = recipe }) {
-                                    RecipeRowView(recipe: recipe)
-                                }
-                                Spacer()
+                            Button(action: { selectedRecipe = recipe }) {
+                                RecipeRowView(recipe: recipe)
                             }
                             .sheet(item: $selectedRecipe) { recipe in
                                 RecipeDetailView(recipe: recipe)
                             }
                         }
                     }
-                    .padding(.horizontal)
+                    .listStyle(.plain)
+                    .refreshable {
+                        await recipeVM.clearData()
+                        await recipeVM.fetchRecipes()
+                    }
                     
                     if !filteredRecipes.isEmpty {
                         Button(action: {
